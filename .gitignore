@@ -7,3 +7,6 @@ node_modules
 # output dir
 dist
 coverage
+
+# ai
+.cursor
