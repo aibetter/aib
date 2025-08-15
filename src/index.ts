@@ -13,16 +13,6 @@ program
   .description('AI Ecosystem CLI - Enhancing the AI ecosystem')
   .version('0.0.0')
 
-// AI-DEV-NOTE: Add a basic hello command to test CLI functionality
-program
-  .command('hello')
-  .description('Say hello to test the CLI')
-  .option('-n, --name <name>', 'Name to greet', 'World')
-  .action((options) => {
-    console.log(`Hello, ${options.name}!`)
-    console.log('🚀 AI Ecosystem CLI is working!')
-  })
-
 // AI-DEV-NOTE: Add version command alias
 program
   .command('version')
