@@ -41,7 +41,7 @@
     "changelogen": "changelogen -r $npm_package_version --output",
     "prerelease": "pnpm build",
     "release": "bumpp",
-    "prepare": "husky && pnpm build && node dist/index.js sync"
+    "prepare": "husky"
   },
   "dependencies": {
     "axios": "^1.11.0",
