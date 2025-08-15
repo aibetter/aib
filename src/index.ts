@@ -2,6 +2,7 @@
 
 import process from 'node:process'
 import { Command } from 'commander'
+import pkg from '../package.json' with { type: 'json' }
 import { syncCommand } from './commands/sync'
 
 // AI-DEV-NOTE: Main CLI entry point using Commander.js
@@ -11,7 +12,7 @@ const program = new Command()
 program
   .name('aib')
   .description('AI Ecosystem CLI - Enhancing the AI ecosystem')
-  .version('0.0.0')
+  .version(pkg.version)
 
 // AI-DEV-NOTE: Add version command alias
 program
