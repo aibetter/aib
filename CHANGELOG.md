@@ -1,4 +1,17 @@
 
+## v0.1.1
+
+[compare changes](https://github.com/aibetter/aib/compare/v0.1.0...v0.1.1)
+
+### 🏡 Chore
+
+- Remove hello command from CLI ([79e6272](https://github.com/aibetter/aib/commit/79e6272))
+- Update CLI version to match package.json ([b0486d6](https://github.com/aibetter/aib/commit/b0486d6))
+
+### ❤️ Contributors
+
+- Litingyes ([@litingyes](https://github.com/litingyes))
+
 ## v0.1.0
 
 
