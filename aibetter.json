@@ -3,16 +3,7 @@
     "rules": {
       "constitution": true,
       "languages": {
-        "TypeScript": {
-          "alias": "languages/ts"
-        },
-        "JavaScript": {
-          "alias": "languages/js"
-        },
-        "vue": true
-      },
-      "roles/Translator": {
-        "alias": "my-custom-translator"
+        "TypeScript": true
       }
     },
     "destination": ".cursor/rules",
