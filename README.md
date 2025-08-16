@@ -79,12 +79,163 @@ aib sync --force --verbose
 
 ## Configuration
 
-The tool uses an `aibetter.json` configuration file to determine which rules to sync and where to place them. The configuration allows you to specify:
+The tool uses an `aibetter.json` configuration file to determine which rules to sync and where to place them. This file follows a JSON schema for validation and provides IntelliSense support in modern editors.
 
-- Source repository settings
-- Destination paths
-- Enabled rules
-- Overwrite behavior
+### Configuration Schema
+
+The configuration schema is available at: `http://aib.aibetter.run/config-schema.json`
+
+To enable schema validation in your editor, add the `$schema` property to your `aibetter.json` file:
+
+```json
+{
+  "$schema": "http://aib.aibetter.run/config-schema.json",
+  "cursor": {
+    "rules": {
+      "constitution": true
+    }
+  }
+}
+```
+
+### Configuration Structure
+
+The configuration file supports the following structure:
+
+#### `cursor` (required)
+
+The main configuration object for Cursor-related synchronization.
+
+##### `cursor.rules` (required)
+
+Defines which rules to sync from the repository. Supports both flat and nested structures:
+
+```json
+{
+  "cursor": {
+    "rules": {
+      // Simple boolean values
+      "constitution": true,
+      "security": false,
+
+      // Nested rules structure
+      "languages": {
+        "TypeScript": true,
+        "Python": true,
+        "JavaScript": false
+      },
+
+      // Rules with custom aliases
+      "performance": {
+        "alias": "perf-optimizations"
+      },
+
+      // Complex nested structure with aliases
+      "frameworks": {
+        "React": true,
+        "Vue": {
+          "alias": "vue-best-practices"
+        }
+      }
+    }
+  }
+}
+```
+
+##### `cursor.destination` (optional)
+
+Specifies the local destination path for synced files. Defaults to `.cursor/rules`.
+
+```json
+{
+  "cursor": {
+    "destination": ".cursor/rules"
+  }
+}
+```
+
+##### `cursor.overwrite` (optional)
+
+Determines whether to overwrite existing files. Defaults to `true`.
+
+```json
+{
+  "cursor": {
+    "overwrite": false
+  }
+}
+```
+
+### Example Configurations
+
+#### Basic Configuration
+
+```json
+{
+  "$schema": "http://aib.aibetter.run/config-schema.json",
+  "cursor": {
+    "rules": {
+      "constitution": true,
+      "languages": {
+        "TypeScript": true
+      }
+    }
+  }
+}
+```
+
+#### Advanced Configuration
+
+```json
+{
+  "$schema": "http://aib.aibetter.run/config-schema.json",
+  "cursor": {
+    "rules": {
+      "constitution": true,
+      "security": true,
+      "languages": {
+        "TypeScript": true,
+        "Python": true,
+        "JavaScript": false
+      },
+      "frameworks": {
+        "React": true,
+        "Vue": {
+          "alias": "vue-best-practices"
+        }
+      },
+      "performance": {
+        "alias": "perf-rules"
+      }
+    },
+    "destination": ".cursor/rules",
+    "overwrite": false
+  }
+}
+```
+
+#### Custom Destination Configuration
+
+```json
+{
+  "$schema": "http://aib.aibetter.run/config-schema.json",
+  "cursor": {
+    "rules": {
+      "constitution": true,
+      "security": true
+    },
+    "destination": "ai-config/rules",
+    "overwrite": false
+  }
+}
+```
+
+### Schema Features
+
+- **Validation**: The JSON schema provides validation for your configuration file
+- **IntelliSense**: Modern editors will provide auto-completion and validation
+- **Documentation**: Hover over properties to see descriptions and examples
+- **Error Detection**: Invalid configurations will be highlighted in your editor
 
 ## Development
 
