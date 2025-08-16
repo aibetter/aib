@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AIB Configuration Schema",
+  "description": "Configuration schema for aib (AI Better) CLI tool",
+  "type": "object",
+  "properties": {
+    "cursor": {
+      "type": "object",
+      "description": "Cursor-related configuration for syncing rules",
+      "properties": {
+        "rules": {
+          "type": "object",
+          "description": "Rules configuration for selective sync (supports nested structure)",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "boolean",
+                "description": "Enable/disable rule"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "alias": {
+                    "type": "string",
+                    "description": "Custom alias path for the rule (relative to .cursor/rules/)"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "description": "Nested rules structure",
+                "additionalProperties": {
+                  "$ref": "#/properties/cursor/properties/rules/additionalProperties"
+                }
+              }
+            ]
+          },
+          "examples": [
+            {
+              "constitution": true,
+              "languages": {
+                "TypeScript": true,
+                "Python": false
+              },
+              "advanced": {
+                "performance": {
+                  "alias": "perf-optimizations"
+                }
+              }
+            }
+          ]
+        },
+        "destination": {
+          "type": "string",
+          "description": "Local destination path for synced files",
+          "default": ".cursor/rules",
+          "examples": [".cursor/rules", "cursor-config", "ai-rules"]
+        },
+        "overwrite": {
+          "type": "boolean",
+          "description": "Whether to overwrite existing files",
+          "default": true
+        }
+      },
+      "required": ["rules"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["cursor"],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "cursor": {
+        "rules": {
+          "constitution": true,
+          "languages": {
+            "TypeScript": true,
+            "Python": true,
+            "JavaScript": false
+          },
+          "frameworks": {
+            "React": true,
+            "Vue": {
+              "alias": "vue-best-practices"
+            }
+          }
+        },
+        "destination": ".cursor/rules",
+        "overwrite": true
+      }
+    },
+    {
+      "cursor": {
+        "rules": {
+          "constitution": true,
+          "security": true,
+          "performance": {
+            "alias": "perf-rules"
+          }
+        },
+        "destination": "ai-config/rules",
+        "overwrite": false
+      }
+    }
+  ]
+}
