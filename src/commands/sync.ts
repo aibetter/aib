@@ -10,8 +10,8 @@ import {
   loadAibetterConfig,
   resolveDestinationPath,
   shouldOverwriteFiles,
-} from '../utils/config.js'
-import { DownloadService } from '../utils/download.js'
+} from '../utils/config'
+import { DownloadService } from '../utils/download'
 
 export interface SyncOptions {
   // AI-DEV-NOTE: Force overwrite existing files
