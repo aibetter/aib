@@ -66,9 +66,9 @@ export async function loadAibetterConfig(cwd?: string): Promise<AibetterConfig> 
 
     const mergedConfig = config || DEFAULT_CONFIG
 
-    // AI-DEV-NOTE: Validate that cursor.rules is configured
+    // AI-DEV-NOTE: Check if cursor.rules is configured, log warning if not
     if (!mergedConfig.cursor?.rules || Object.keys(mergedConfig.cursor.rules).length === 0) {
-      throw new Error('No cursor rules configured. Please add rules to cursor.rules in aibetter.json')
+      console.warn('No cursor rules configured. Skipping sync process. Add rules to cursor.rules in aibetter.json to enable synchronization.')
     }
 
     return mergedConfig
