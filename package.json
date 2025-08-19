@@ -37,6 +37,7 @@
     "format": "eslint --fix .",
     "dev": "tsdown --watch",
     "build": "tsdown",
+    "sync": "pnpm build && pnpm aib sync",
     "commit": "git-cz",
     "changelogen": "changelogen -r $npm_package_version --output",
     "prerelease": "pnpm build",
