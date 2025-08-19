@@ -11,6 +11,7 @@ import {
   resolveDestinationPath,
   shouldOverwriteFiles,
 } from '../utils/config'
+import { LOG_PREFIX } from '../utils/constants'
 import { DownloadService } from '../utils/download'
 
 export interface SyncOptions {
@@ -37,7 +38,7 @@ export class SyncCommand {
    */
   async execute(options: SyncOptions = {}): Promise<void> {
     try {
-      console.log(chalk.blue('🔄 Starting sync process...'))
+      console.log(LOG_PREFIX, chalk.blue('🔄 Starting sync process...'))
 
       // AI-DEV-NOTE: Load configuration
       this.config = await loadAibetterConfig()
@@ -49,32 +50,32 @@ export class SyncCommand {
       const shouldOverwrite = options.force || overwrite
 
       if (options.verbose) {
-        console.log(chalk.gray(`Repository: ${repository.owner}/${repository.repo}`))
-        console.log(chalk.gray(`Source path: ${repository.path}`))
-        console.log(chalk.gray(`Destination: ${destination}`))
-        console.log(chalk.gray(`Reference: ${repository.ref}`))
+        console.log(LOG_PREFIX, chalk.gray(`Repository: ${repository.owner}/${repository.repo}`))
+        console.log(LOG_PREFIX, chalk.gray(`Source path: ${repository.path}`))
+        console.log(LOG_PREFIX, chalk.gray(`Destination: ${destination}`))
+        console.log(LOG_PREFIX, chalk.gray(`Reference: ${repository.ref}`))
       }
 
       // AI-DEV-NOTE: Ensure destination directory exists
       const destinationPath = resolveDestinationPath(destination)
 
       if (options.dryRun) {
-        console.log(chalk.yellow(`[DRY RUN] Would sync to: ${destinationPath}`))
+        console.log(LOG_PREFIX, chalk.yellow(`[DRY RUN] Would sync to: ${destinationPath}`))
       }
       else {
         await ensureDir(destinationPath)
       }
 
       // AI-DEV-NOTE: Get selected files based on cursor.rules configuration
-      console.log(chalk.blue('📡 Fetching specified rules from GitHub...'))
+      console.log(LOG_PREFIX, chalk.blue('📡 Fetching specified rules from GitHub...'))
       const filesToSync = await this.getSelectedFiles(repository)
 
       if (filesToSync.length === 0) {
-        console.log(chalk.yellow('⚠️  No enabled rules found to sync'))
+        console.log(LOG_PREFIX, chalk.yellow('⚠️  No enabled rules found to sync'))
         return
       }
 
-      console.log(chalk.green(`📦 Found ${filesToSync.length} files to sync`))
+      console.log(LOG_PREFIX, chalk.green(`📦 Found ${filesToSync.length} files to sync`))
 
       // AI-DEV-NOTE: Download and save files
       let syncedCount = 0
@@ -88,7 +89,7 @@ export class SyncCommand {
 
         if (fileExists && !shouldOverwrite && !options.dryRun) {
           if (options.verbose) {
-            console.log(chalk.gray(`⏭️  Skipping existing file: ${targetPath}`))
+            console.log(LOG_PREFIX, chalk.gray(`⏭️  Skipping existing file: ${targetPath}`))
           }
           skippedCount++
           continue
@@ -96,7 +97,7 @@ export class SyncCommand {
 
         if (options.dryRun) {
           const sourceNote = targetPath !== sourcePath ? ` (from ${sourcePath})` : ''
-          console.log(chalk.yellow(`[DRY RUN] Would sync: ${targetPath}${sourceNote}`))
+          console.log(LOG_PREFIX, chalk.yellow(`[DRY RUN] Would sync: ${targetPath}${sourceNote}`))
           syncedCount++
           continue
         }
@@ -110,32 +111,32 @@ export class SyncCommand {
 
           if (options.verbose) {
             const aliasNote = targetPath !== sourcePath ? ` (aliased from ${sourcePath})` : ''
-            console.log(chalk.green(`✅ Synced: ${targetPath}${aliasNote}`))
+            console.log(LOG_PREFIX, chalk.green(`✅ Synced: ${targetPath}${aliasNote}`))
           }
 
           syncedCount++
         }
         catch (error) {
-          console.error(chalk.red(`❌ Failed to sync ${targetPath}: ${error}`))
+          console.error(LOG_PREFIX, chalk.red(`❌ Failed to sync ${targetPath}: ${error}`))
         }
       }
 
       // AI-DEV-NOTE: Display summary
       if (options.dryRun) {
-        console.log(chalk.blue(`\n🔍 Dry run completed:`))
-        console.log(chalk.green(`  📦 ${syncedCount} files would be synced`))
+        console.log(LOG_PREFIX, chalk.blue(`\n🔍 Dry run completed:`))
+        console.log(LOG_PREFIX, chalk.green(`  📦 ${syncedCount} files would be synced`))
       }
       else {
-        console.log(chalk.blue(`\n✨ Sync completed:`))
-        console.log(chalk.green(`  📦 ${syncedCount} files synced`))
+        console.log(LOG_PREFIX, chalk.blue(`\n✨ Sync completed:`))
+        console.log(LOG_PREFIX, chalk.green(`  📦 ${syncedCount} files synced`))
         if (skippedCount > 0) {
-          console.log(chalk.yellow(`  ⏭️  ${skippedCount} files skipped (already exist)`))
+          console.log(LOG_PREFIX, chalk.yellow(`  ⏭️  ${skippedCount} files skipped (already exist)`))
         }
-        console.log(chalk.gray(`  📍 Destination: ${relative(process.cwd(), destinationPath)}`))
+        console.log(LOG_PREFIX, chalk.gray(`  📍 Destination: ${relative(process.cwd(), destinationPath)}`))
       }
     }
     catch (error) {
-      console.error(chalk.red('❌ Sync failed:'), error)
+      console.error(LOG_PREFIX, chalk.red('❌ Sync failed:'), error)
       process.exit(1)
     }
   }
@@ -171,7 +172,7 @@ export class SyncCommand {
         })
       }
       catch (error) {
-        console.warn(chalk.yellow(`⚠️  Failed to fetch rule: ${rule.source} - ${error}`))
+        console.warn(LOG_PREFIX, chalk.yellow(`⚠️  Failed to fetch rule: ${rule.source} - ${error}`))
       }
     }
 

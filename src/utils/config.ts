@@ -1,5 +1,6 @@
 import { resolve } from 'node:path'
 import { loadConfig } from 'c12'
+import { LOG_PREFIX } from './constants'
 
 export interface RuleConfig {
   // AI-DEV-NOTE: Custom alias path for the rule (relative to .cursor/rules/)
@@ -68,7 +69,7 @@ export async function loadAibetterConfig(cwd?: string): Promise<AibetterConfig> 
 
     // AI-DEV-NOTE: Check if cursor.rules is configured, log warning if not
     if (!mergedConfig.cursor?.rules || Object.keys(mergedConfig.cursor.rules).length === 0) {
-      console.warn('No cursor rules configured. Skipping sync process. Add rules to cursor.rules in aibetter.json to enable synchronization.')
+      console.warn(LOG_PREFIX, 'No cursor rules configured. Skipping sync process. Add rules to cursor.rules in aibetter.json to enable synchronization.')
     }
 
     return mergedConfig

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { LOG_PREFIX } from './constants'
 
 // AI-DEV-NOTE: Simple file download service using GitHub raw URLs
 export class DownloadService {
@@ -72,7 +73,7 @@ export class DownloadService {
       return true
     }
     catch (error) {
-      console.error(error)
+      console.error(LOG_PREFIX, error)
       return false
     }
   }

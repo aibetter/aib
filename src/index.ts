@@ -4,6 +4,7 @@ import process from 'node:process'
 import { Command } from 'commander'
 import pkg from '../package.json' with { type: 'json' }
 import { syncCommand } from './commands/sync'
+import { LOG_PREFIX } from './utils/constants'
 
 // AI-DEV-NOTE: Main CLI entry point using Commander.js
 const program = new Command()
@@ -19,7 +20,7 @@ program
   .command('version')
   .description('Show version information')
   .action(() => {
-    console.log(`aib v${program.version()}`)
+    console.log(LOG_PREFIX, `aib v${program.version()}`)
   })
 
 // AI-DEV-NOTE: Add sync command to sync cursor rules from GitHub repository
