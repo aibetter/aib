@@ -49,6 +49,10 @@ export class SyncCommand {
       const overwrite = shouldOverwriteFiles(this.config)
       const shouldOverwrite = options.force || overwrite
 
+      // AI-DEV-NOTE: Always show data source location to make it more prominent
+      const sourceUrl = `https://github.com/${repository.owner}/${repository.repo}/tree/${repository.ref}/${repository.path}`
+      console.log(LOG_PREFIX, chalk.cyan(`📡 Data source: ${sourceUrl}`))
+
       if (options.verbose) {
         console.log(LOG_PREFIX, chalk.gray(`Repository: ${repository.owner}/${repository.repo}`))
         console.log(LOG_PREFIX, chalk.gray(`Source path: ${repository.path}`))
@@ -67,7 +71,7 @@ export class SyncCommand {
       }
 
       // AI-DEV-NOTE: Get selected files based on cursor.rules configuration
-      console.log(LOG_PREFIX, chalk.blue('📡 Fetching specified rules from GitHub...'))
+      console.log(LOG_PREFIX, chalk.blue('📦 Fetching specified rules from data source...'))
       const filesToSync = await this.getSelectedFiles(repository)
 
       if (filesToSync.length === 0) {

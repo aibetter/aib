@@ -34,6 +34,7 @@ export interface AibetterConfig {
 }
 
 // AI-DEV-NOTE: Fixed repository configuration (hard-coded)
+// Data source: https://github.com/aibetter/context/tree/main/data
 const REPOSITORY_CONFIG: RepositoryConfig & { ref: string } = {
   owner: 'aibetter',
   repo: 'context',

@@ -52,7 +52,13 @@ aib --version
 
 ### Sync Command
 
-The sync command allows you to synchronize cursor rules from the aibetter/context repository to your local project.
+The sync command allows you to synchronize cursor rules to your local project.
+
+#### Data Source
+
+The sync command retrieves rules from the community-maintained repository: [https://github.com/aibetter/context/tree/main/data](https://github.com/aibetter/context/tree/main/data)
+
+This repository contains curated cursor rules and configurations that help improve AI-assisted development workflows.
 
 ```bash
 # Basic sync
@@ -76,6 +82,8 @@ aib sync --force --verbose
 - `-f, --force` - Force overwrite existing files
 - `-d, --dry-run` - Show what would be synced without actually doing it
 - `-v, --verbose` - Enable verbose output
+
+> **Note:** When you run the sync command, it will display the data source URL at the beginning to show where the rules are being fetched from.
 
 ## Configuration
 
