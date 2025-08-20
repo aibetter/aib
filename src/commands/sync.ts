@@ -126,17 +126,18 @@ export class SyncCommand {
       }
 
       // AI-DEV-NOTE: Display summary
+      console.log('')
       if (options.dryRun) {
-        console.log(LOG_PREFIX, chalk.blue(`\n🔍 Dry run completed:`))
-        console.log(LOG_PREFIX, chalk.green(`  📦 ${syncedCount} files would be synced`))
+        console.log(LOG_PREFIX, chalk.blue('🔍 Dry run completed:'))
+        console.log(LOG_PREFIX, chalk.green(`📦 ${syncedCount} files would be synced`))
       }
       else {
-        console.log(LOG_PREFIX, chalk.blue(`\n✨ Sync completed:`))
-        console.log(LOG_PREFIX, chalk.green(`  📦 ${syncedCount} files synced`))
+        console.log(LOG_PREFIX, chalk.blue('✨ Sync completed:'))
+        console.log(LOG_PREFIX, chalk.green(`📦 ${syncedCount} files synced`))
         if (skippedCount > 0) {
-          console.log(LOG_PREFIX, chalk.yellow(`  ⏭️  ${skippedCount} files skipped (already exist)`))
+          console.log(LOG_PREFIX, chalk.yellow(`⏭️  ${skippedCount} files skipped (already exist)`))
         }
-        console.log(LOG_PREFIX, chalk.gray(`  📍 Destination: ${relative(process.cwd(), destinationPath)}`))
+        console.log(LOG_PREFIX, chalk.gray(`📍 Destination: ${relative(process.cwd(), destinationPath)}`))
       }
     }
     catch (error) {
