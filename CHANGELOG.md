@@ -1,4 +1,20 @@
 
+## v0.1.3
+
+[compare changes](https://github.com/aibetter/aib/compare/v0.1.2...v0.1.3)
+
+### 🩹 Fixes
+
+- Enhance error handling in sync and download services ([6c5d273](https://github.com/aibetter/aib/commit/6c5d273))
+
+### 📖 Documentation
+
+- Update README and sync command to clarify data source ([c17ed88](https://github.com/aibetter/aib/commit/c17ed88))
+
+### ❤️ Contributors
+
+- Litingyes ([@litingyes](https://github.com/litingyes))
+
 ## v0.1.2
 
 [compare changes](https://github.com/aibetter/aib/compare/v0.1.1...v0.1.2)
