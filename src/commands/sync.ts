@@ -172,7 +172,13 @@ export class SyncCommand {
         })
       }
       catch (error) {
-        console.warn(LOG_PREFIX, chalk.yellow(`⚠️  Failed to fetch rule: ${rule.source} - ${error}`))
+        const errorMessage = error instanceof Error ? error.message : String(error)
+        if (errorMessage.includes('File not found (404)')) {
+          console.warn(LOG_PREFIX, chalk.yellow(`⚠️  ${errorMessage}`))
+        }
+        else {
+          console.warn(LOG_PREFIX, chalk.yellow(`⚠️  Failed to fetch rule: ${rule.source} - ${errorMessage}`))
+        }
       }
     }
 

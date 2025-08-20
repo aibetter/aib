@@ -4,6 +4,7 @@ import { LOG_PREFIX } from './constants'
 // AI-DEV-NOTE: Simple file download service using GitHub raw URLs
 export class DownloadService {
   private readonly baseUrl = 'https://raw.githubusercontent.com'
+  private readonly githubUrl = 'https://github.com'
 
   /**
    * AI-DEV-NOTE: Download file content directly from GitHub raw URL
@@ -19,9 +20,9 @@ export class DownloadService {
     path: string,
     ref = 'main',
   ): Promise<string> {
-    try {
-      const url = `${this.baseUrl}/${owner}/${repo}/${ref}/${path}`
+    const url = `${this.baseUrl}/${owner}/${repo}/${ref}/${path}`
 
+    try {
       const response = await axios.get<string>(url, {
         headers: {
           'User-Agent': 'aib-cli',
@@ -35,7 +36,8 @@ export class DownloadService {
     catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 404) {
-          throw new Error(`File not found: ${path}`)
+          const githubUrl = this.buildGitHubUrl(owner, repo, path, ref)
+          throw new Error(`File not found (404): ${githubUrl}`)
         }
         if (error.response?.status === 403) {
           throw new Error(`Access denied: ${path}`)
@@ -44,6 +46,23 @@ export class DownloadService {
       }
       throw new Error(`Download failed for ${path}: ${error}`)
     }
+  }
+
+  /**
+   * AI-DEV-NOTE: Build GitHub repository URL for browser viewing
+   * @param owner Repository owner
+   * @param repo Repository name
+   * @param path File path
+   * @param ref Branch or commit ref (default: main)
+   * @returns GitHub repository URL
+   */
+  private buildGitHubUrl(
+    owner: string,
+    repo: string,
+    path: string,
+    ref = 'main',
+  ): string {
+    return `${this.githubUrl}/${owner}/${repo}/blob/${ref}/${path}`
   }
 
   /**
