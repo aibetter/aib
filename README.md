@@ -83,7 +83,8 @@ aib sync --force --verbose
 - `-d, --dry-run` - Show what would be synced without actually doing it
 - `-v, --verbose` - Enable verbose output
 
-> **Note:** When you run the sync command, it will display the data source URL at the beginning to show where the rules are being fetched from.
+> [!NOTE]
+> When you run the sync command, it will display the data source URL at the beginning to show where the rules are being fetched from.
 
 ## Configuration
 
